@@ -30,7 +30,7 @@ public class FSEmpty implements FiniteSet {
     // add(elt) returns (this) set with elt also included
     public FiniteSet add(int elt) {
         // (this) set is empty, so return a new set containing one element, elt
-        return new FSBranch(elt, new FSEmpty(), new FSEmpty());
+        return new FSBranch(elt);
     }
     
     // remove(elt) returns an equivalent set with elt removed

@@ -5,6 +5,12 @@ public class FSBranch implements FiniteSet {
     FiniteSet left;
     FiniteSet right;
     
+    public FSBranch(int root) {
+        this.root = root;
+        this.left = new FSEmpty();
+        this.right = new FSEmpty();
+    }
+    
     public FSBranch(int root, FiniteSet left, FiniteSet right) {
         this.root = root;
         this.left = left;
@@ -41,6 +47,23 @@ public class FSBranch implements FiniteSet {
     
     // add(elt) returns a set containing all elements of (this) set and elt
     public FiniteSet add(int elt) {
+       if (this.member(elt)) {
+           return this;
+       } else {
+           if (this.root > elt) {
+               if (this.left.isEmptyHuh()) {
+                   this.left = new FSBranch(elt);
+               } else {
+                   this.left.add(elt);
+               }
+           } else {
+               if (this.right.isEmptyHuh()) {
+                   this.right = new FSBranch(elt);
+               } else {
+                   this.right.add(elt);
+               }
+           }
+       }
        return this;
     }
     
