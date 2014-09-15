@@ -113,14 +113,34 @@ public class FSBranch implements FiniteSet {
     // inter(u) returns a set containing all elts that are included in
     // BOTH (this) set and set u
     public FiniteSet inter(FiniteSet u) {
-
-        return this;
+        if (u.member(this.root)) {
+            // if this.root is a member of u, return a new set of this.root
+            // and the intersections with u of the left and right branches
+            return new FSBranch(this.root, this.left.inter(u), this.right.inter(u));
+        } else {
+            // if this.root is not a member of u, it is skipped; return
+            // the union of the intersections of u with left and right branches
+            return this.left.inter(u).union(this.right.inter(u));
+        }
     }
 
     // diff(u) returns a set containing elts of set u except those that
     // also appear in (this) set
     public FiniteSet diff(FiniteSet u) {
-        return this;
+        // place set u into a temporary variable
+        FiniteSet temp = u;
+        if (temp.member(this.root)) {
+            // if this.root is a member of temp, return the union of the left
+            // and right branches that have been differenced with temp
+            // when this.root is removed from it
+            return this.left.diff(temp.remove(this.root))
+                    .union(this.right.diff(temp.remove(this.root)));
+        } else {
+            // if this.root is not a member of temp, ignore it and
+            // return the union of the left and right branches
+            // that have been differenced with temp
+            return this.left.diff(temp).union(this.right.diff(temp));
+        }
     }
 
     // equal(u) returns true if (this) set and set u contain exactly

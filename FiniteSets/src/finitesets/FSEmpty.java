@@ -1,7 +1,6 @@
 package finitesets;
 
 public class FSEmpty implements FiniteSet {
-    int root;
     
     public FSEmpty() {  }
     
