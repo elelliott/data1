@@ -79,21 +79,41 @@ public class FSBranch implements FiniteSet {
 
     // remove(elt) returns a set containing all elts of (this) set except elt
     public FiniteSet remove(int elt) {
-        return this;
+        // elt must be a member of this to be removed from this
+        if (this.member(elt)) {
+            if (this.root == elt) {
+                // if this.root is elt, return a new set that combines the
+                // left and right branches of this (excluding elt)
+                return this.left.union(this.right);
+            } else {
+                // if this.root is not elt, return a set containing elt
+                // with any instance of elt removed from the rest of the set
+                return new FSBranch(this.root,
+                        this.left.remove(elt), this.right.remove(elt));
+            }
+        } else {
+            // if elt is not a member of this, return this
+            return this;
+        }
     }
 
     // union(u) returns a set containing all elts of (this) set
     // and all elts of set u
     public FiniteSet union(FiniteSet u) {
-        FiniteSet temp = new FSEmpty();
-       // ...
+        // place set u into a temporary variable
+        FiniteSet temp = u;
+        // temp should include this.root (add checks for membership)
+        // and the its unions with the left and right branches of this
+        temp = temp.add(this.root).union(this.left).union(this.right);
+        // return the temp set containing everything in u and all things in
+        // this that are not duplicates of elts of u
         return temp;
     }
 
     // inter(u) returns a set containing all elts that are included in
     // BOTH (this) set and set u
     public FiniteSet inter(FiniteSet u) {
-        
+
         return this;
     }
 
@@ -115,10 +135,10 @@ public class FSBranch implements FiniteSet {
     public boolean subset(FiniteSet u) {
         // returns true if this and u are equal, or...
         return this.equal(u) ||
-               // if the length of the difference b/t this and u
-               // is equal to the length of u minus the length of this
-               // (all elts of this were present in u s.t. they were removed
-               // by diff method --> length(diff) = length(u) - length(this))
-               this.diff(u).cardinality() == u.cardinality() - this.cardinality();
+                // if the length of the difference b/t this and u
+                // is equal to the length of u minus the length of this
+                // (all elts of this were present in u s.t. they were removed
+                // by diff method --> length(diff) = length(u) - length(this))
+                this.diff(u).cardinality() == u.cardinality() - this.cardinality();
     }
 }
