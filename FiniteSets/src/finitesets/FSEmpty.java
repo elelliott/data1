@@ -62,8 +62,8 @@ public class FSEmpty implements FiniteSet {
     
     // equal(u) returns true if both sets contain exactly the same elts
     public boolean equal(FiniteSet u) {
-        // empty set contains no elts, so return true if set u is
-        // also empty
+        // if (this) set is empty, the sets can only be equal
+        // if u is also empty: return true if u is empty
         return u.isEmptyHuh();
     }
     

@@ -1,6 +1,6 @@
 package finitesets;
 
-interface FiniteSet {
+public interface FiniteSet {
     
     // this finite set implementation uses binary search trees with
     // requirements such that:
@@ -9,7 +9,7 @@ interface FiniteSet {
     //        anything in the right branch is larger than the root
 
     // empty : no input --> fs
-    // empty() returns a new empty set
+    // returns a new empty set
     FiniteSet empty();
     // cardinality : fs --> int
     // t.cardinality() returns the number of elts in set t
@@ -22,9 +22,11 @@ interface FiniteSet {
     boolean member(int elt);
     // add : fs, int --> fs
     // t.add(elt) returns a set containing elt and everything in set t
+    // ENSURES that no duplicate roots can be added to set t
     FiniteSet add(int elt);
-    // remove : fs. int --> fs
+    // remove : fs, int --> fs
     // t.remove(elt) returns the set that results when elt is removed from set t
+    // REQUIRES that set t has no duplicate roots
     FiniteSet remove(int elt);
     // union : fs, fs --> fs
     // t.union(u) returns the set that contains all elements from sets t and u

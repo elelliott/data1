@@ -36,15 +36,9 @@ public class FSBranch implements FiniteSet {
     }
 
     // member(elt) returns true if elt is a member of (this) set
-    public boolean member(int elt) {
-//        if (this.root == elt) {
-//            // if root = elt, elt is a member of the set
-//            return true;
-//        } else {
-//            // if root != elt, check in the left and right branches
-//            return this.left.member(elt) || this.right.member(elt);
-//        }
-        
+    public boolean member(int elt) {  
+        // returns true if this element = elt, if not: checks in left
+        // and right branches
         return this.root == elt || this.left.member(elt) || this.right.member(elt);
     }
 
@@ -157,26 +151,9 @@ public class FSBranch implements FiniteSet {
 
     // subset(u) returns true if (this) set is a subset of set u
     public boolean subset(FiniteSet u) {
-        // returns true if this and u are equal, or...
-//        return this.equal(u) ||
-//                // if the length of the difference b/t this and u
-//                // is equal to the length of u minus the length of this
-//                // (all elts of this were present in u s.t. they were removed
-//                // by diff method --> length(diff) = length(u) - length(this))
-//                this.diff(u).cardinality() == u.cardinality() - this.cardinality();
-        
+        // returns true if this.root is a member u, AND the left AND
+        // right branches are also subsets of u
         return u.member(this.root) && this.left.subset(u) && this.right.subset(u);
     }
-    
-    ///////////////////////
-    /////// TESTING ///////
-    ///////////////////////
-    
-    // for all x y s, x.union(y).subset(s) = x.subset(s) && y.subset(s)
-    // for all x y, max(x.cardinality(), y.cardinality()) <= 
-    //           x.union(y).cardinality() <= x.cardinality() + y.cardinality()
-    
-    // FOR ESSAY: Establish a standard, say why it's a good standard,
-    //            then cite lines of code that illustrate the standard is met
     
 }
