@@ -84,14 +84,8 @@ public class FSBranch implements FiniteSet {
     // union(u) returns a set containing all elts of (this) set
     // and all elts of set u
     public FiniteSet union(FiniteSet u) {
-        // place set u into a temporary variable
-        FiniteSet temp = u;
-        // temp should include this.root (add checks for membership)
-        // and the its unions with the left and right branches of this
-        temp = temp.add(this.root).union(this.left).union(this.right);
-        // return the temp set containing everything in u and all things in
-        // this that are not duplicates of elts of u
-        return temp;
+        //WORK IN PROGRESS
+        return this;
     }
 
     // inter(u) returns a set containing all elts that are included in
@@ -111,19 +105,16 @@ public class FSBranch implements FiniteSet {
     // diff(u) returns a set containing elts of set u except those that
     // also appear in (this) set
     public FiniteSet diff(FiniteSet u) {
-        // place set u into a temporary variable
-        FiniteSet temp = u;
-        if (temp.member(this.root)) {
+        if (u.member(this.root)) {
             // if this.root is a member of temp, return the union of the left
             // and right branches that have been differenced with temp
             // when this.root is removed from it
-            return this.left.diff(temp.remove(this.root))
-                    .union(this.right.diff(temp.remove(this.root)));
+            return this.left.union(this.right).diff(u.remove(this.root));
         } else {
             // if this.root is not a member of temp, ignore it and
             // return the union of the left and right branches
             // that have been differenced with temp
-            return this.left.diff(temp).union(this.right.diff(temp));
+            return this.left.union(this.right).diff(u);
         }
     }
 
