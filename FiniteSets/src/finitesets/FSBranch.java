@@ -39,7 +39,9 @@ public class FSBranch implements FiniteSet {
     public boolean member(int elt) {  
         // returns true if this element = elt, if not: checks in left
         // and right branches
-        return this.root == elt || this.left.member(elt) || this.right.member(elt);
+        if (this.root == elt) return true;
+        else if (this.root > elt) return this.left.member(elt);
+        else return this.right.member(elt);
     }
 
     // add(elt) returns a set containing all elements of (this) set and elt
@@ -69,11 +71,16 @@ public class FSBranch implements FiniteSet {
                 // if this.root is elt, return a new set that combines the
                 // left and right branches of this (excluding elt)
                 return this.left.union(this.right);
-            } else {
-                // if this.root is not elt, return a set containing elt
-                // with any instance of elt removed from the rest of the set
+            } else if (this.root > elt) {
+                // if this.root > elt, elt lies to the left of this.root
+                // return a new set with elt removed from the left branch
                 return new FSBranch(this.root,
-                        this.left.remove(elt), this.right.remove(elt));
+                        this.left.remove(elt), this.right);
+            } else {
+                // otherwise, elt lies to the right of this.root
+                // return a new set with elt removed from the right branch
+                return new FSBranch(this.root, 
+                        this.left, this.right.remove(elt));
             }
         } else {
             // if elt is not a member of this, return this
