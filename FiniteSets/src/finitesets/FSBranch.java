@@ -51,27 +51,13 @@ public class FSBranch implements FiniteSet {
             return this;
         } else {
             if (this.root > elt) {
-                // if root > elt, elt must go to the left of root
-                if (this.left.isEmptyHuh()) {
-                    // if left is empty, create a branch with root elt
-                    this.left = new FSBranch(elt);
-                } else {
-                    // if left is not empty, add elt to left branch
-                    this.left.add(elt);
-                }
+                // if root > elt, elt must be added to the left of root
+                return new FSBranch(this.root, this.left.add(elt), this.right);
             } else {
-                // if root < elt, elt must go to the right of root
-                if (this.right.isEmptyHuh()) {
-                    // if right is empty, create a branch with root elt
-                    this.right = new FSBranch(elt);
-                } else {
-                    // if right is not empty, add elt to right branch
-                    this.right.add(elt);
-                }
+                // if root < elt, elt must be added to the right of root
+                return new FSBranch(this.root, this.left, this.right.add(elt));
             }
         }
-        // return the set with elt added
-        return this;
     }
 
     // remove(elt) returns a set containing all elts of (this) set except elt
