@@ -103,6 +103,38 @@ public class FiniteSets {
             System.out.println(answer + " should be " + true);
         }
     }
+    
+    // for all t u, t.subset(u) = true <-> t.inter(u).equal(t) = true
+    public static void checkSubInter() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            FiniteSet u = randFS();
+            boolean answer = (t.subset(u) == t.inter(u).equal(t));
+            System.out.println(answer + " should be " + true);
+        }
+    }
+        
+    // for all t u x, t.add(x).subset(u.remove(x)) = false
+    public static void checkSubRemove() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            FiniteSet u = randFS();
+            int x = randomizer.nextInt() % 50;
+            boolean answer = t.add(x).subset(u.remove(x));
+            System.out.println(answer + " should be " + false);
+        }
+    }
+    
+    // for all t u, t.union(u).equal(t) && t.union(u).equal(u) <-> t.equal(u)
+    public static void checkUnionEqual() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            FiniteSet u = randFS();
+            boolean answer = ((t.union(u).equal(t) && t.union(u).equal(u))
+                    == t.equal(u));
+            System.out.println(answer + " should be " + true);
+        }
+    }
 
     // FOR ESSAY: Establish a standard, say why it's a good standard,
     //            then cite lines of code that illustrate the standard is met
@@ -118,8 +150,14 @@ public class FiniteSets {
         checkMemberAdd();
         System.out.println("Member & Union property check:");
         checkMemberUnion();
-        System.out.println("Subset, Equal, Diff/Cardinality property check:");
+        System.out.println("Subset, Equal, Diff property check:");
         checkSubEqualDiff();
+        System.out.println("Subset, Inter, Equal property check:");
+        checkSubInter();
+        System.out.println("Subset & Add/Remove property check:");
+        checkSubRemove();
+        System.out.println("Union & Equal property check:");
+        checkUnionEqual();
 
     }
 
