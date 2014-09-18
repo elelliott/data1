@@ -30,11 +30,12 @@ public class FiniteSets {
         System.out.println(test());
         System.out.println(tree2.remove(1).cardinality());
         System.out.println(tree2.remove(2).member(2));
-        // union not working
+        System.out.println(tree2.union(tree3).member(4));
+        System.out.println(tree2.union(tree3).cardinality());
         System.out.println(tree2.inter(tree3).member(2));
         System.out.println(tree2.isEmptyHuh());
         System.out.println(tree.isEmptyHuh());
-        //diff not working (depends on union)
+        System.out.println(tree2.diff(tree3).member(2));
         System.out.println(tree.equal(tree2.remove(2).remove(1)));
         System.out.println(tree2.subset(tree3));
 

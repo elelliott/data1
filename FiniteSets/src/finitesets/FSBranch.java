@@ -84,8 +84,9 @@ public class FSBranch implements FiniteSet {
     // union(u) returns a set containing all elts of (this) set
     // and all elts of set u
     public FiniteSet union(FiniteSet u) {
-        //WORK IN PROGRESS
-        return this;
+        // combine u with the left and right branches of (this), then
+        // add this.root
+        return this.left.union(this.right).union(u).add(this.root);
     }
 
     // inter(u) returns a set containing all elts that are included in
