@@ -1,4 +1,5 @@
 package finitesets;
+
 import java.util.Random;
 
 public class FiniteSets {
@@ -6,13 +7,12 @@ public class FiniteSets {
     ///////////////////////
     /////// TESTING ///////
     ///////////////////////
-    
     // reiteration of empty method as bypass of static requirement
     // returns a fresh empty set
     public static FiniteSet empty() {
         return new FSEmpty();
     }
-    
+
     // a randomizer for number generation
     static Random randomizer = new Random();
 
@@ -20,7 +20,7 @@ public class FiniteSets {
     static FiniteSet mt = empty();
     static FiniteSet tree2 = empty().add(1).add(2);
     static FiniteSet tree4 = empty().add(1).add(2).add(4).add(5);
-    
+
     // randFS : no input --> fs
     // generates a random finite set of random length (max. 100) and
     // random entries (each element max. value 50)
@@ -32,10 +32,8 @@ public class FiniteSets {
         }
         return tree;
     }
-    
-    
+
     //////////////////////////// PROPERTIES ////////////////////////////
-    
     // for all x y s, x.union(y).subset(s) = x.subset(s) && y.subset(s)
     public static void checkUnionSubset() {
         FiniteSet x = randFS();
@@ -44,7 +42,7 @@ public class FiniteSets {
         boolean answer = (x.union(y).subset(s) == (x.subset(s) && y.subset(s)));
         System.out.println(answer + " should be " + true);
     }
-    
+
     // for all x y, max(x.cardinality(), y.cardinality()) <= 
     //           x.union(y).cardinality() <= x.cardinality() + y.cardinality()
     public static void checkUnionCard() {
@@ -56,7 +54,7 @@ public class FiniteSets {
                 && (x.union(y).cardinality() <= (xlength + ylength)));
         System.out.println(answer + " should be " + true);
     }
-    
+
     // for all t u x, t.inter(u).member(x) = t.member(x) && u.member(x)
     public static void checkMemberInter() {
         FiniteSet t = randFS();
@@ -66,12 +64,28 @@ public class FiniteSets {
         boolean answer = (t.inter(u).member(x) == (t.member(x) && u.member(x)));
         System.out.println(answer + " should be " + true);
     }
-    
-    
+
+    // member (add t x) y = true <-> x = y \/ member t y = true
+    public static void checkMemberAdd() {
+        FiniteSet t = randFS();
+        int x = randomizer.nextInt() % 50;
+        int y = randomizer.nextInt() % 50;
+        boolean answer = (t.add(x).member(y) == ((x == y) || t.member(y)));
+        System.out.println(answer + " should be " + true);
+    }
+
+    // member (union s t) x = true <-> member s x = true \/ member t x = true
+    public static void checkMemberUnion() {
+        FiniteSet s = randFS();
+        FiniteSet t = randFS();
+        int x = randomizer.nextInt() % 50;
+        boolean answer = (t.union(s).member(x) == (s.member(x) || t.member(x)));
+        System.out.println(answer + " should be " + true);
+    }
+
     // FOR ESSAY: Establish a standard, say why it's a good standard,
     //            then cite lines of code that illustrate the standard is met
-
-
+    
     public static void main(String[] args) {
         System.out.println("Union & Subset property check:");
         checkUnionSubset();
@@ -85,6 +99,15 @@ public class FiniteSets {
         checkMemberInter();
         checkMemberInter();
         checkMemberInter();
+        System.out.println("Member & Add property check:");
+        checkMemberAdd();
+        checkMemberAdd();
+        checkMemberAdd();
+        System.out.println("Member & Union property check:");
+        checkMemberUnion();
+        checkMemberUnion();
+        checkMemberUnion();
+
 
     }
 
