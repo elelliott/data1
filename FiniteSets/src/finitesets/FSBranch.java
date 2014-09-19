@@ -114,14 +114,14 @@ public class FSBranch implements FiniteSet {
     // also appear in (this) set
     public FiniteSet diff(FiniteSet u) {
         if (u.member(this.root)) {
-            // if this.root is a member of temp, return the union of the left
-            // and right branches that have been differenced with temp
+            // if this.root is a member of u, return the union of the left
+            // and right branches that have been differenced with u
             // when this.root is removed from it
             return this.left.union(this.right).diff(u.remove(this.root));
         } else {
-            // if this.root is not a member of temp, ignore it and
+            // if this.root is not a member of u, ignore it and
             // return the union of the left and right branches
-            // that have been differenced with temp
+            // that have been differenced with u
             return this.left.union(this.right).diff(u);
         }
     }

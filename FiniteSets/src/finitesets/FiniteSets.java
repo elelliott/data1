@@ -94,7 +94,7 @@ public class FiniteSets {
 
     // for all t u, t.subset(u) = true <-> t.equal(u) || 
     //           t.diff(u).cardinality() == u.cardinality() - t.cardinality()
-    public static void checkSubEqualDiff() {
+    public static void checkSubDiff() {
         for (int i = 0; i < 15; i++) {
             FiniteSet t = randFS();
             FiniteSet u = randFS();
@@ -135,7 +135,38 @@ public class FiniteSets {
             System.out.println(answer + " should be " + true);
         }
     }
+    
+    // for all t u x, t.inter(u).member(x) = true <-> t.diff(u).member(x) = false
+    public static void checkInterDiff() {
+        for (int i = 0; i < 15; i++) {
+            int x = randomizer.nextInt() % 50;
+            FiniteSet t = randFS().add(x);
+            FiniteSet u = randFS().add(x);
+            boolean answer = (t.inter(u).member(x) == t.diff(u).member(x));
+            System.out.println(answer + " should be " + false);
+        }
+    }
+    
+    // for all t u, t.equal(u) = true <-> t.subset(u) && u.subset(t)
+    public static void checkEqualSubset() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            FiniteSet u = randFS();
+            boolean answer = (t.equal(u) == (t.subset(u) && u.subset(t)));
+            System.out.println(answer + " should be " + true);
+        }
+    }
 
+    // for all t u, t.equal(u) = true <-> t.union(u).equal(t.inter(u))
+    public static void checkUnionInter() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            FiniteSet u = randFS();
+            boolean answer = (t.equal(u) == t.union(u).equal(t.inter(u)));
+            System.out.println(answer + " should be " + true);
+        }
+    }
+    
     // FOR ESSAY: Establish a standard, say why it's a good standard,
     //            then cite lines of code that illustrate the standard is met
     
@@ -150,14 +181,20 @@ public class FiniteSets {
         checkMemberAdd();
         System.out.println("Member & Union property check:");
         checkMemberUnion();
-        System.out.println("Subset, Equal, Diff property check:");
-        checkSubEqualDiff();
+        System.out.println("Subset & Diff property check:");
+        checkSubDiff();
         System.out.println("Subset, Inter, Equal property check:");
         checkSubInter();
         System.out.println("Subset & Add/Remove property check:");
         checkSubRemove();
         System.out.println("Union & Equal property check:");
         checkUnionEqual();
+        System.out.println("Inter & Diff property check:");
+        checkInterDiff();
+        System.out.println("Subset & Equal property check:");
+        checkEqualSubset();
+        System.out.println("Union & Inter property check:");
+        checkUnionInter();
 
     }
 
