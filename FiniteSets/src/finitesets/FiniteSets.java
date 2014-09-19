@@ -167,8 +167,14 @@ public class FiniteSets {
         }
     }
     
-    // FOR ESSAY: Establish a standard, say why it's a good standard,
-    //            then cite lines of code that illustrate the standard is met
+    // for all t, t.diff(t) = empty
+    public static void checkDiffEmpty() {
+        for (int i = 0; i < 15; i++) {
+            FiniteSet t = randFS();
+            boolean answer = t.diff(t).isEmptyHuh();
+            System.out.println(answer + " should be " + true);
+        }
+    }
     
     public static void main(String[] args) {
         System.out.println("Union & Subset property check:");
@@ -195,6 +201,9 @@ public class FiniteSets {
         checkEqualSubset();
         System.out.println("Union & Inter property check:");
         checkUnionInter();
+        System.out.println("Union & isEmpty property check:");
+        checkDiffEmpty();
+        
 
     }
 
