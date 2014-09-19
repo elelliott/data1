@@ -203,8 +203,7 @@ public class FiniteSets {
         checkUnionInter();
         System.out.println("Union & isEmpty property check:");
         checkDiffEmpty();
-        
-
+       
     }
 
 }
